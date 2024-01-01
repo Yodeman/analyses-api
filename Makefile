@@ -11,10 +11,10 @@ dropdb:
 	docker exec -it postgres16 dropdb analyses-api
 
 migrateup:
-	migrate -path dbase/migration -database "postgres://root:$DBASE_PASSWORD@localhost:5000/analyses-api?sslmode=disable" -verbose up 
+	migrate -path dbase/migration -database "postgres://root:${DBASE_PASSWORD}@localhost:5000/analyses-api?sslmode=disable" -verbose up 
 
 migratedown:
-	migrate -path dbase/migration -database "postgres://root:$DBASE_PASSWORD@localhost:5000/analyses-api?sslmode=disable" -verbose down
+	migrate -path dbase/migration -database "postgres://root:${DBASE_PASSWORD}@localhost:5000/analyses-api?sslmode=disable" -verbose down
 
 mock:
 	mockgen -package mockdb -destination dbase/mock/store.go github.com/yodeman/analyses-api/dbase/sqlc Querier
