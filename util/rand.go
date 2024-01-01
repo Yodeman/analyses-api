@@ -4,7 +4,10 @@ import (
     "fmt"
     "math/rand"
     "strings"
+    "strconv"
     "time"
+
+    "gonum.org/v1/gonum/mat"
 )
 
 const (
@@ -46,4 +49,39 @@ func RandomEmail() string {
 // RandomPassword generates a random user password
 func RandomPassword() string {
     return RandomString(passwordLen)
+}
+
+// RandomCSV generates random csv string
+func RandomCSV(rows, cols int) string {
+    var sampleCSV string
+    r, c := 0, 0
+
+    for r != rows {
+        elem := strconv.FormatFloat(rand.Float64() * 100, 'f', 6, 64)
+        if c == (cols - 1) {
+            sampleCSV += elem+"\n"
+            c = 0
+            r++
+        } else if c < cols {
+            sampleCSV += elem+","
+            c++
+        }
+    }
+
+    return sampleCSV
+}
+
+// RandomData generate random serialized user data
+func RandomData() ([]byte, error) {
+    sample_text := RandomCSV(10,10)
+
+    reader := strings.NewReader(sample_text)
+
+    rows, cols, data, err := ParseCSVToFloatSlice(reader)
+    if err != nil {
+        return []byte{}, err
+    }
+
+    m := mat.NewDense(rows, cols, data)
+    return m.MarshalBinary()
 }
