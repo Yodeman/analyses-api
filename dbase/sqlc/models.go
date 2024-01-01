@@ -9,10 +9,10 @@ import (
 )
 
 type File struct {
-	ID        int64         `json:"id"`
-	Username  string        `json:"username"`
-	Data      []interface{} `json:"data"`
-	CreatedAt time.Time     `json:"created_at"`
+	ID        int64     `json:"id"`
+	Username  string    `json:"username"`
+	Data      string    `json:"data"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 type User struct {

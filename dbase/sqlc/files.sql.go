@@ -7,8 +7,6 @@ package db
 
 import (
 	"context"
-
-	"github.com/lib/pq"
 )
 
 const createFile = `-- name: CreateFile :one
@@ -22,17 +20,17 @@ RETURNING id, username, data, created_at
 `
 
 type CreateFileParams struct {
-	Username string        `json:"username"`
-	Data     []interface{} `json:"data"`
+	Username string `json:"username"`
+	Data     string `json:"data"`
 }
 
 func (q *Queries) CreateFile(ctx context.Context, arg CreateFileParams) (File, error) {
-	row := q.db.QueryRowContext(ctx, createFile, arg.Username, pq.Array(arg.Data))
+	row := q.db.QueryRowContext(ctx, createFile, arg.Username, arg.Data)
 	var i File
 	err := row.Scan(
 		&i.ID,
 		&i.Username,
-		pq.Array(&i.Data),
+		&i.Data,
 		&i.CreatedAt,
 	)
 	return i, err
@@ -50,7 +48,7 @@ func (q *Queries) GetFile(ctx context.Context, username string) (File, error) {
 	err := row.Scan(
 		&i.ID,
 		&i.Username,
-		pq.Array(&i.Data),
+		&i.Data,
 		&i.CreatedAt,
 	)
 	return i, err
@@ -64,17 +62,17 @@ RETURNING id, username, data, created_at
 `
 
 type UpdateFileParams struct {
-	Data     []interface{} `json:"data"`
-	Username string        `json:"username"`
+	Data     string `json:"data"`
+	Username string `json:"username"`
 }
 
 func (q *Queries) UpdateFile(ctx context.Context, arg UpdateFileParams) (File, error) {
-	row := q.db.QueryRowContext(ctx, updateFile, pq.Array(arg.Data), arg.Username)
+	row := q.db.QueryRowContext(ctx, updateFile, arg.Data, arg.Username)
 	var i File
 	err := row.Scan(
 		&i.ID,
 		&i.Username,
-		pq.Array(&i.Data),
+		&i.Data,
 		&i.CreatedAt,
 	)
 	return i, err
