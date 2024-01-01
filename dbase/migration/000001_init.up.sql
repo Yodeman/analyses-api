@@ -9,7 +9,7 @@ CREATE TABLE "users" (
 CREATE TABLE "files" (
   "id" bigserial PRIMARY KEY,
   "username" varchar NOT NULL,
-  "data" "char"[],
+  "data" text NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
