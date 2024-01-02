@@ -19,3 +19,6 @@ migratedown:
 mock:
 	mockgen -package mockdb -destination dbase/mock/store.go github.com/yodeman/analyses-api/dbase/sqlc Querier
 
+test:
+	go test -v -cover ./...
+
