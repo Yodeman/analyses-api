@@ -12,6 +12,7 @@ type File struct {
 	ID        int64     `json:"id"`
 	Username  string    `json:"username"`
 	Data      string    `json:"data"`
+	ChangedAt time.Time `json:"changed_at"`
 	CreatedAt time.Time `json:"created_at"`
 }
 

@@ -16,7 +16,7 @@ INSERT INTO files (
 ) VALUES (
     $1, $2
 )
-RETURNING id, username, data, created_at
+RETURNING id, username, data, changed_at, created_at
 `
 
 type CreateFileParams struct {
@@ -31,13 +31,14 @@ func (q *Queries) CreateFile(ctx context.Context, arg CreateFileParams) (File, e
 		&i.ID,
 		&i.Username,
 		&i.Data,
+		&i.ChangedAt,
 		&i.CreatedAt,
 	)
 	return i, err
 }
 
 const getFile = `-- name: GetFile :one
-SELECT id, username, data, created_at FROM files
+SELECT id, username, data, changed_at, created_at FROM files
 WHERE username = $1
 LIMIT 1
 `
@@ -49,6 +50,7 @@ func (q *Queries) GetFile(ctx context.Context, username string) (File, error) {
 		&i.ID,
 		&i.Username,
 		&i.Data,
+		&i.ChangedAt,
 		&i.CreatedAt,
 	)
 	return i, err
@@ -58,7 +60,7 @@ const updateFile = `-- name: UpdateFile :one
 UPDATE files
 SET data = $1
 WHERE username = $2
-RETURNING id, username, data, created_at
+RETURNING id, username, data, changed_at, created_at
 `
 
 type UpdateFileParams struct {
@@ -73,6 +75,7 @@ func (q *Queries) UpdateFile(ctx context.Context, arg UpdateFileParams) (File, e
 		&i.ID,
 		&i.Username,
 		&i.Data,
+		&i.ChangedAt,
 		&i.CreatedAt,
 	)
 	return i, err
