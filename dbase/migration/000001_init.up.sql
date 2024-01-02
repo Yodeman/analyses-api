@@ -10,9 +10,11 @@ CREATE TABLE "files" (
   "id" bigserial PRIMARY KEY,
   "username" varchar NOT NULL,
   "data" text NOT NULL,
+  "changed_at" timestamptz NOT NULL DEFAULT (now()),
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
 CREATE UNIQUE INDEX ON "files" ("username");
 
+ALTER TABLE "users" ADD CONSTRAINT "user_email_constraint" UNIQUE ("username", "email");
 ALTER TABLE "files" ADD FOREIGN KEY ("username") REFERENCES "users" ("username");
