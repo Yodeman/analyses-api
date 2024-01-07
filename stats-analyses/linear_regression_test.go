@@ -1,17 +1,17 @@
 package statsanal
 
 import (
-    "strings"
-    "testing"
+	"strings"
+	"testing"
 
-    "github.com/stretchr/testify/require"
-    "gonum.org/v1/gonum/mat"
+	"github.com/stretchr/testify/require"
+	"gonum.org/v1/gonum/mat"
 
-    "github.com/yodeman/analyses-api/util"
+	"github.com/yodeman/analyses-api/util"
 )
 
 func TestLinearRegression(t *testing.T) {
-    sampleCSV := `19.48,54.86,128,563,476,731,649,565,128
+	sampleCSV := `19.48,54.86,128,563,476,731,649,565,128
     19.59,54.23,129,563,477,731,649,565,125
     19.63,54.05,128,566,478,732,649,565,125
     19.64,53.74,128,566,478,732,649,565,125
@@ -42,18 +42,18 @@ func TestLinearRegression(t *testing.T) {
     19.48,54.66,128,582,500,731,649,565,113
     19.5,54.66,131,582,500,731,649,565,113`
 
-    tstatGT := "[[0.36592], [2.00788], [2.24806], [-0.47590], [-0.39411], [-2.98670], [-1.20966], [0.87740], [-0.67826]]"
-    coeffsGT := "[[199.60969], [11.66467], [2.59601], [-0.12517], [-0.08513], [-0.48230], [-0.54345], [0.67493], [-0.33504]]"
+	tstatGT := "[[0.36592], [2.00788], [2.24806], [-0.47590], [-0.39411], [-2.98670], [-1.20966], [0.87740], [-0.67826]]"
+	coeffsGT := "[[199.60969], [11.66467], [2.59601], [-0.12517], [-0.08513], [-0.48230], [-0.54345], [0.67493], [-0.33504]]"
 
-    reader := strings.NewReader(sampleCSV)
-    rows, cols, data, err := util.ParseCSVToFloatSlice(reader)
-    require.NoError(t, err)
-    require.Equal(t, 9, cols)
-    require.Equal(t, 30, rows)
+	reader := strings.NewReader(sampleCSV)
+	rows, cols, data, err := util.ParseCSVToFloatSlice(reader)
+	require.NoError(t, err)
+	require.Equal(t, 9, cols)
+	require.Equal(t, 30, rows)
 
-    m := mat.NewDense(rows, cols, data)
-    coeffs, tstat, err := LinearRegression(m)
-    require.NoError(t, err)
-    require.Equal(t, coeffsGT, coeffs)
-    require.Equal(t, tstatGT, tstat)
+	m := mat.NewDense(rows, cols, data)
+	coeffs, tstat, err := LinearRegression(m)
+	require.NoError(t, err)
+	require.Equal(t, coeffsGT, coeffs)
+	require.Equal(t, tstatGT, tstat)
 }
