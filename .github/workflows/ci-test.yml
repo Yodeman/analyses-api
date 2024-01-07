@@ -48,6 +48,8 @@ jobs:
         sudo mv migrate /usr/bin/
     - name: Run migration
       run: make migrateup
+      env:
+        DBASE_PASSWORD: ${{ secrets.DBASE_PASSWORD }}
 
     - name: Test
       run: make test
