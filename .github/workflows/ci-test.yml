@@ -10,8 +10,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   test:
+  	name: Test
     runs-on: ubuntu-latest
     
     services:
