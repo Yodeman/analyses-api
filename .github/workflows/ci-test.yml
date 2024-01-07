@@ -49,6 +49,7 @@ jobs:
 
     - name: Run migration
       run: |
+        make mtest
         which migrate
         echo $DBASE_PASSWORD
         make migrateup
