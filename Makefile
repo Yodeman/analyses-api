@@ -23,3 +23,8 @@ mock:
 
 test:
 	go test -v -cover ./...
+
+mtest:
+	echo ${DB_URL}
+	echo $$PATH
+	echo $$DBASE_PASSWORD
