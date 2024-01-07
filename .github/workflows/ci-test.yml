@@ -18,7 +18,7 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres:16
+        image: postgres:16-alpine
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: ${{ secrets.DBASE_PASSWORD }}
@@ -48,12 +48,7 @@ jobs:
         sudo mv migrate /usr/bin/
 
     - name: Run migration
-      run: |
-        uname -a
-        make mtest
-        which migrate
-        echo $DBASE_PASSWORD
-        make migrateup
+      run: make migrateup
       env:
         DBASE_PASSWORD: ${{ secrets.DBASE_PASSWORD }}
 
