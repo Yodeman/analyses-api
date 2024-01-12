@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER_FILE: run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB: analyses-api
+    ports:
+      - "5000:5432"
+    secrets:
+      - db_user
+      - db_password
+    healthcheck:
+      test: [ "CMD", "pg_is_ready" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DB_USER: /run/secrets/db_user
+      DB_ADDRESS: postgres:5432
+      SERVER_ADDRESS: 0.0.0.0:8000
+      TOKEN_SYMMETRIC_KEY: /run/secrets/token
+      DB_PASSWORD: /run/secrets/db_password
+    secrets:
+      - db_user
+      - db_password
+      - token
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    entrypoint: ["/app/start.sh" ]
+    command: [ "/app/analyses-api" ]
+
+secrets:
+  db_user:
+    environment: "DB_USER"
+  db_password:
+    environment: "DB_PASSWORD"
+  token:
+    environment: "TOKEN_SYMMETRIC_KEY"
