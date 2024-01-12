@@ -1,10 +1,10 @@
-DB_URL := postgres://root:${DBASE_PASSWORD}@localhost:5000/analyses-api?sslmode=disable
+DB_URL := postgres://${DB_USER}:${DB_PASSWORD}@${DB_ADDRESS}/analyses-api?sslmode=disable
 
 sqlc:
 	sqlc generate
 
 postgres:
-	docker run -p 5000:5432 --name postgres16 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=${DBASE_PASSWORD} -d postgres:16-alpine
+	docker run -p 5000:5432 --network analyses-network --name postgres16 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=${DB_PASSWORD} -d postgres:16-alpine
 
 createdb:
 	docker exec -it postgres16 createdb --username=root --owner=root analyses-api
