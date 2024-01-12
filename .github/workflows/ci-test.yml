@@ -50,7 +50,9 @@ jobs:
     - name: Run migration
       run: make migrateup
       env:
-        DBASE_PASSWORD: ${{ secrets.DBASE_PASSWORD }}
+        DB_PASSWORD: ${{ secrets.DBASE_PASSWORD }}
+        DB_USER:  ${{ secrets.DBASE_USER}}
+        DB_ADDRESS: localhost:5000
 
     - name: Test
       run: make test
