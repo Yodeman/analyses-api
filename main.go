@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	dbPass, found := os.LookupEnv("DBASE_PASSWORD")
+	dbPass, found := os.LookupEnv("DB_PASSWORD")
 	if !found {
 		log.Fatal("Cannot find database password!!!")
 	}
