@@ -28,6 +28,7 @@ services:
       SERVER_ADDRESS: 0.0.0.0:8000
       TOKEN_SYMMETRIC_KEY: /run/secrets/token
       DB_PASSWORD: /run/secrets/db_password
+      DB_NAME: analyses-api
     secrets:
       - db_user
       - db_password
