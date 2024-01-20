@@ -8,6 +8,7 @@ Currently there are provisions for:
 with support for many more analyses operation coming along.
 
 ## **Getting started guide**
+Read the [postman documentation](https://documenter.getpostman.com/view/17081738/2s9YsT6oZJ)
 
 To start using analyses APIs, you need to -
 
